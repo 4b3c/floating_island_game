@@ -1,44 +1,12 @@
 import pygame
 import random
+import tile_classes
 
 sky_blue = (140, 160, 220)
 rock_grey = (80, 80, 90)
 grass_green = (70, 110, 60)
 
 t_size = 32
-
-
-class grass():
-	def __init__(self, coords):
-		self.coords = coords
-		path = random.choice(('grass_1.png', 'grass_2.png', 'grass_3.png'))
-		self.image = pygame.image.load('sprites/grass/' + path).convert_alpha()
-		self.wood = 500
-
-class trees():
-	def __init__(self, coords):
-		self.coords = coords
-		self.image = pygame.image.load('sprites/trees/trees_1.png').convert_alpha()
-		self.wood = 500
-
-class rocks():
-	def __init__(self, coords):
-		self.coords = coords
-		self.image = pygame.image.load('sprites/rocks/rock_1.png').convert_alpha()
-		self.rock = 500
-
-class ruins():
-	def __init__(self, coords):
-		self.coords = coords
-		self.image = pygame.image.load('sprites/ruins/ruins.png').convert_alpha()
-		self.destroyed = 500
-
-class ship():
-	def __init__(self, coords):
-		self.coords = coords
-		self.image = pygame.image.load('sprites/buildings/ship.png').convert_alpha()
-		self.level = 0
-		self.room = 4
 
 
 class island():
@@ -62,19 +30,19 @@ class island():
 		self.top = []
 		for i in range(random.randint(5, 8)):
 			tile = random.choice(backup)
-			self.top.append(trees(tile))
+			self.top.append(tile_classes.trees(tile))
 			backup.remove(tile)
 		for i in range(random.randint(2, 3)):
 			tile = random.choice(backup)
-			self.top.append(rocks(tile))
+			self.top.append(tile_classes.rocks(tile))
 			backup.remove(tile)
 		for i in range(random.randint(1, 2)):
 			tile = random.choice(backup)
-			self.top.append(ruins(tile))
+			self.top.append(tile_classes.ruins(tile))
 			backup.remove(tile)
 		for tile in backup:
-			self.top.append(grass(tile))
-		self.top.append(ship((self.surface[0][0], self.surface[0][1])))
+			self.top.append(tile_classes.grass(tile))
+		self.top.append(tile_classes.ship((self.surface[0][0], self.surface[0][1])))
 
 
 	def draw_island(self, t_size, window):
