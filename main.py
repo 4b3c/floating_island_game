@@ -80,7 +80,7 @@ def main_menu(window, win_size):
 					game_obj = game_(win_size, name)
 					return game_obj
 				else:
-					game_obj = open_(button.text[0:5])
+					game_obj = open_(button.text[0:6])
 					return game_obj
 		pygame.display.update()
 
