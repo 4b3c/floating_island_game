@@ -3,15 +3,15 @@ import variables
 
 class button():
 	__slots__ = ("text", "pos", "high_pos", "text_size", "font", "size", "surf_size", "high_size", "pressed", "surf", "high_surf")
-	
-	def __init__(self, text_size, pos, text, center_align):
+
+	def __init__(self, text_size, pos, text, side_size = 1.6):
 		self.text = text
 		self.pos = list(pos)
 		self.high_pos = list(pos[:])
 		self.text_size = text_size
-		self.font = pygame.font.SysFont("SWRomns", self.text_size, True)
+		self.font = pygame.font.SysFont("SWMono", self.text_size, True)
 		self.size = self.font.size(text)
-		self.surf_size = (self.size[0] * 1.1, self.size[1] * 1.1)
+		self.surf_size = (self.size[0] * side_size, self.size[1] * 1.4)
 		self.high_size = (self.surf_size[0] * 1.05, self.surf_size[1])
 		self.pressed = False
 
@@ -21,7 +21,7 @@ class button():
 		self.surf.fill(variables.button_bg)
 		pygame.draw.polygon(self.surf, (variables.high_bg), ((0, 0), (0, self.surf_size[1]), (self.surf_size)))
 		text_surf = self.font.render(self.text, False, variables.word_color)
-		self.surf.blit(text_surf, (text_size / 10, text_size / 10))
+		self.surf.blit(text_surf, ((self.surf_size[0] - self.size[0]) / 2, text_size / 10))
 		pygame.draw.rect(self.surf, (variables.border), ((0, 0) + self.surf_size), int(text_size / 6))
 
 
@@ -30,13 +30,12 @@ class button():
 		self.high_surf.fill(variables.high_bg)
 		pygame.draw.polygon(self.high_surf, (variables.button_bg), ((0, 0), (0, self.high_size[1]), (self.high_size)))
 		text_surf = self.font.render(self.text, False, variables.word_color)
-		self.high_surf.blit(text_surf, ((text_size / 10) + (self.high_size[0] * 0.025), text_size / 10))
+		self.high_surf.blit(text_surf, ((self.high_size[0] - self.size[0]) / 2, text_size / 10))
 		pygame.draw.rect(self.high_surf, (variables.border), ((0, 0) + self.high_size), int(text_size / 6))
 
 
-		if center_align:
-			self.pos[0] = (self.pos[0]  - (self.surf_size[0] / 2))
-			self.high_pos[0] = (self.high_pos[0]  - (self.high_size[0] / 2))
+		self.pos[0] = (self.pos[0]  - (self.surf_size[0] / 2))
+		self.high_pos[0] = (self.high_pos[0]  - (self.high_size[0] / 2))
 
 	def draw(self, window, mouse_pos, mouse_press, off_y = 0):
 		self.pressed = False

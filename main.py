@@ -28,6 +28,10 @@ class game_():
 		pygame.display.update()
 
 
+def wait_mouse_up():
+	while pygame.mouse.get_pos()[0]:
+		pass
+
 def save_(game_obj):
 	file = open('worlds/' + game_obj.name + '.pickle', 'wb')
 	pickle.dump(game_obj, file)
@@ -40,8 +44,8 @@ def open_(name):
 	return game_obj
 
 def opening_menu(window):
-	play_ = buttons.button(40, (200, 500), "play", False)
-	quit_ = buttons.button(40, (600, 500), "quit", False)
+	play_ = buttons.button(40, (550, 400), "play", 3)
+	quit_ = buttons.button(40, (550, 480), "quit", 3)
 
 	while play_.pressed == False:
 		for event in pygame.event.get():
@@ -59,9 +63,9 @@ def opening_menu(window):
 
 def main_menu(window, win_size):
 	wld = os.listdir("worlds")
-	buttons_ = [buttons.button(40, (550, 130), "new game", True)]
-	buttons_ += [buttons.button(40, (550, 200 + (count * 70)), file, True) for file, count in zip(wld, range(len(wld)))]
-	buttons_ += [buttons.button(40, (800, 400), "back", False)]
+	buttons_ = [buttons.button(40, (550, 120), "new game")]
+	buttons_ += [buttons.button(40, (550, 200 + (count * 80)), file[0:6]) for file, count in zip(wld, range(len(wld)))]
+	buttons_ += [buttons.button(40, (800, 480), "back")]
 
 	while True:
 		for event in pygame.event.get():
@@ -98,6 +102,7 @@ pygame.init()
 window = pygame.display.set_mode(win_size)
 
 opening_menu(window)
+wait_mouse_up()
 game = main_menu(window, win_size)
 game.load()
 
@@ -108,4 +113,7 @@ while True:
 		if event.type == pygame.QUIT:
 			game.save()
 			save_(game)
-			quit()
+			opening_menu(window)
+			wait_mouse_up()
+			game = main_menu(window, win_size)
+			game.load()
