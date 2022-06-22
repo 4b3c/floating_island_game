@@ -2,6 +2,8 @@ import pygame
 import variables
 
 class button():
+	__slots__ = ("text", "pos", "high_pos", "text_size", "font", "size", "surf_size", "high_size", "pressed", "surf", "high_surf")
+	
 	def __init__(self, text_size, pos, text, center_align):
 		self.text = text
 		self.pos = list(pos)

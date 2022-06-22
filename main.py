@@ -8,15 +8,23 @@ import os
 
 
 class game_():
+	__slots__ = ("t_size", "height", "main_island", "name")
+
 	def __init__(self, win_size, name):
 		self.t_size = 32
 		self.height = 12
-		# self.main_island = island.island(int(win_size[0] / self.t_size), self.height)
+		self.main_island = island.island(int(win_size[0] / self.t_size), self.height)
 		self.name = name
+
+	def load(self):
+		self.main_island.to_classes()
+
+	def save(self):
+		self.main_island.to_save()
 
 	def run(self, window):
 		window.fill(variables.sky_blue)
-		# self.main_island.draw_island(self.t_size, window)
+		self.main_island.draw_island(self.t_size, window)
 		pygame.display.update()
 
 
@@ -30,7 +38,6 @@ def open_(name):
 	game_obj = pickle.load(file)
 	file.close()
 	return game_obj
-
 
 def opening_menu(window):
 	play_ = buttons.button(40, (200, 500), "play", False)
@@ -49,7 +56,6 @@ def opening_menu(window):
 
 		if quit_.pressed:
 			quit()
-
 
 def main_menu(window, win_size):
 	wld = os.listdir("worlds")
@@ -93,11 +99,13 @@ window = pygame.display.set_mode(win_size)
 
 opening_menu(window)
 game = main_menu(window, win_size)
+game.load()
 
 while True:
 	game.run(window)
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
+			game.save()
 			save_(game)
 			quit()

@@ -40,9 +40,11 @@ class island():
 			self.top.append(["grass", tile])
 		self.top.append(["ship", (self.surf[0][0], self.surf[0][1])])
 
+		self.to_classes()
+
 	def to_classes(self):
 		for tile, count in zip(self.top, range(len(self.top))):
-			if tile[0] == "trees":
+			if tile[0].name == "trees":
 				self.top[count] = tile_classes.trees(tile[1])
 			elif tile[0] == "rocks":
 				self.top[count] = tile_classes.rocks(tile[1])
@@ -50,7 +52,7 @@ class island():
 				self.top[count] = tile_classes.ruins(tile[1])
 			elif tile[0] == "grass":
 				self.top[count] = tile_classes.grass(tile[1])
-			elif tile[0] == "ship":
+			elif tile[0] == "grass":
 				self.top[count] = tile_classes.ship(tile[1])
 
 	def to_save(self):
