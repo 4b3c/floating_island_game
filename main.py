@@ -16,8 +16,6 @@ while True:
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-			game.save()
-			menus.save_(game)
 			menus.opening_menu(window)
 			game = menus.main_menu(window, win_size)
 			game.load()
