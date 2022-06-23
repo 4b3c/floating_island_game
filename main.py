@@ -5,6 +5,7 @@ import variables
 import pickle
 import buttons
 import os
+import time
 
 
 class game_():
@@ -29,8 +30,12 @@ class game_():
 
 
 def wait_mouse_up():
-	while pygame.mouse.get_pos()[0]:
-		pass
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				quit()
+			if event.type == pygame.MOUSEBUTTONUP:
+				return
 
 def save_(game_obj):
 	file = open('worlds/' + game_obj.name + '.pickle', 'wb')
@@ -60,6 +65,7 @@ def opening_menu(window):
 
 		if quit_.pressed:
 			quit()
+	wait_mouse_up()
 
 def main_menu(window, win_size):
 	wld = os.listdir("worlds")
@@ -80,6 +86,7 @@ def main_menu(window, win_size):
 			if button.pressed:
 				if button == buttons_[-1]:
 					# back
+					wait_mouse_up()
 					opening_menu(window)
 				elif button == buttons_[0]:
 					# new
@@ -102,7 +109,6 @@ pygame.init()
 window = pygame.display.set_mode(win_size)
 
 opening_menu(window)
-wait_mouse_up()
 game = main_menu(window, win_size)
 game.load()
 
@@ -114,6 +120,13 @@ while True:
 			game.save()
 			save_(game)
 			opening_menu(window)
-			wait_mouse_up()
 			game = main_menu(window, win_size)
 			game.load()
+
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_ESCAPE:
+				game.save()
+				save_(game)
+				opening_menu(window)
+				game = main_menu(window, win_size)
+				game.load()
