@@ -36,3 +36,19 @@ class ship():
 		self.level = 0
 		self.room = 4
 		self.name = "ship"
+
+class mining():
+	def __init__(self, coords):
+		self.coords = coords
+		self.image = pygame.image.load('sprites/buildings/mining.png').convert_alpha()
+		self.level = 0
+		self.jobs = 4
+		self.name = "mining"
+
+class woodcutting():
+	def __init__(self, coords):
+		self.coords = coords
+		self.image = pygame.image.load('sprites/buildings/woodcutting.png').convert_alpha()
+		self.level = 0
+		self.jobs = 4
+		self.name = "woodcutting"

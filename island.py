@@ -4,7 +4,7 @@ import tile_classes
 import variables
 
 class island():
-	__slots__ = ("surf", "underground", "top")
+	__slots__ = ("surf", "underground", "top", "top_c")
 
 	def __init__(self, size, surf_height):
 		start = random.randint(3, int(size * 0.15))
@@ -23,6 +23,7 @@ class island():
 				pass
 
 		backup = self.surf[1:]
+		self.top_c = [[x, y - 1] for x, y in self.surf[1:]]
 		self.top = []
 		for i in range(random.randint(5, 8)):
 			tile = random.choice(backup)
@@ -38,7 +39,7 @@ class island():
 			backup.remove(tile)
 		for tile in backup:
 			self.top.append(["grass", tile])
-		self.top.append(["ship", (self.surf[0][0], self.surf[0][1])])
+		self.top.append(["ship", [self.surf[0][0], self.surf[0][1]]])
 
 	def to_classes(self):
 		for tile, count in zip(self.top, range(len(self.top))):
@@ -52,6 +53,10 @@ class island():
 				self.top[count] = tile_classes.grass(tile[1])
 			elif tile[0] == "ship":
 				self.top[count] = tile_classes.ship(tile[1])
+			elif tile[0] == "mining":
+				self.top[count] = tile_classes.mining(tile[1])
+			elif tile[0] == "woodcutting":
+				self.top[count] = tile_classes.woodcutting(tile[1])
 
 	def to_save(self):
 		for tile, count in zip(self.top, range(len(self.top))):
