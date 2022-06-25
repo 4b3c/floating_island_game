@@ -87,6 +87,9 @@ def pause_menu(window, game_, win_size):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				quit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					return
 		window.fill((0, 0, 0))
 		mouse_pos = pygame.mouse.get_pos()
 		mouse_press = pygame.mouse.get_pressed()[0]

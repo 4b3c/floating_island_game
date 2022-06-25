@@ -10,4 +10,4 @@ image_border = (120, 120, 120)
 word_color = (200, 200, 200)
 
 def round_spec(x, base = 32):
-    return base * round(x/base)
+    return base * int(x/base)

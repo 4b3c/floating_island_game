@@ -2,7 +2,7 @@ import pygame
 import variables
 
 class button():
-	__slots__ = ("text", "pos", "high_pos", "text_size", "font", "size", "surf_size", "high_size", "pressed", "surf", "high_surf")
+	__slots__ = ("text", "pos", "high_pos", "text_size", "font", "size", "surf_size", "high_size", "pressed", "surf", "high_surf", "highlighted")
 
 	def __init__(self, text_size, pos, text, side_size = 1.6, top_size = 1.4, image_p = None):
 		self.text = text
@@ -14,6 +14,7 @@ class button():
 		self.surf_size = (self.size[0] * side_size, self.size[1] * top_size)
 		self.high_size = (self.surf_size[0] * 1.05, self.surf_size[1])
 		self.pressed = False
+		self.highlighted = False
 
 
 		if image_p == None:
@@ -58,9 +59,12 @@ class button():
 		self.pressed = False
 		if mouse_pos[0] < self.pos[0] or mouse_pos[0] > self.pos[0] + self.surf_size[0]:
 			window.blit(self.surf, (self.pos[0], self.pos[1] + off_y))
+			self.highlighted = False
 		elif mouse_pos[1] < self.pos[1] or mouse_pos[1] > self.pos[1] + self.surf_size[1]:
 			window.blit(self.surf, (self.pos[0], self.pos[1] + off_y))
+			self.highlighted = False
 		else:
 			window.blit(self.high_surf, (self.high_pos[0], self.high_pos[1] + off_y))
+			self.highlighted = True
 			if mouse_press:
 				self.pressed = True

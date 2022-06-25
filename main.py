@@ -1,11 +1,11 @@
 import pygame
+pygame.init()
+win_size = (1100, 700)
+window = pygame.display.set_mode(win_size)
+
 import game
 import menus
 
-
-win_size = (1100, 700)
-pygame.init()
-window = pygame.display.set_mode(win_size)
 
 menus.opening_menu(window)
 game = menus.main_menu(window, win_size)
@@ -24,7 +24,7 @@ while True:
 
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
-				if game.building == 0:
+				if game.show_buildings == False:
 					menus.pause_menu(window, game, win_size)
 				else:
-					game.building = 0
+					game.show_buildings = False
