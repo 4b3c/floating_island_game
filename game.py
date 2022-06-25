@@ -61,7 +61,11 @@ class game_():
 					if closest in coords:
 						currently = names[coords.index(closest)]
 						if currently == "grass" or currently == "roof":
-							self.main_island.top[coords.index(closest)][-1] = tile_classes.create_class(self.building_type, closest)
+							if currently == "roof":
+								level = 1
+							else:
+								level = 0
+							self.main_island.top[coords.index(closest)][-1] = tile_classes.create_class(self.building_type, closest, level)
 							self.main_island.top[coords.index(closest)].append(tile_classes.roof([int(closest[0]), int(closest[1] - 1)]))
 
 						# elif currently == "roof":
