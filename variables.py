@@ -9,5 +9,7 @@ border = (50, 50, 50)
 image_border = (120, 120, 120)
 word_color = (200, 200, 200)
 
+displayer_bg = (80, 80, 80)
+
 def round_spec(x, base = 32):
     return base * int(x/base)
