@@ -8,6 +8,7 @@ high_bg = (40, 40, 40)
 border = (50, 50, 50)
 image_border = (120, 120, 120)
 word_color = (200, 200, 200)
+red = (255, 50, 50)
 
 displayer_bg = (80, 80, 80)
 
