@@ -17,7 +17,7 @@ class game_():
 		self.name = name
 		self.show_buildings = False
 		self.building_image = None
-		self.resources = {"gold": 0, "food": 10, "wood": 10, "stone": 10}
+		self.resources = {"gold": 40, "food": 60, "wood": 70, "stone": 90}
 
 	def load(self):
 		self.main_island.to_classes()
@@ -33,6 +33,18 @@ class game_():
 
 	def reset_top_coords(self):
 		self.top_coords = [[tower[-1].coords, tower[-1].name] for tower in self.main_island.top]
+
+	def check_cost(self):
+		for resource, cost in zip(self.resources, tile_classes.build_costs[self.building_type]):
+			if cost > self.resources[resource]:
+				return False
+
+		for resource, cost in zip(self.resources, tile_classes.build_costs[self.building_type]):
+			self.resources[resource] -= cost
+
+		self.res_displayers = displayer.dict_to_displayers(self.resources)
+
+		return True
 
 	def run(self, window, mouse_pos, mouse_press):
 		window.fill(variables.sky_blue)
@@ -73,7 +85,9 @@ class game_():
 								level = 1
 							else:
 								level = 0
-							self.main_island.top[coords.index(closest)][-1] = tile_classes.create_class(self.building_type, closest, level)
-							self.main_island.top[coords.index(closest)].append(tile_classes.roof([int(closest[0]), int(closest[1] - 1)]))
+
+							if self.check_cost():
+								self.main_island.top[coords.index(closest)][-1] = tile_classes.create_class(self.building_type, closest, level)
+								self.main_island.top[coords.index(closest)].append(tile_classes.roof([int(closest[0]), int(closest[1] - 1)]))
 
 		pygame.display.update()

@@ -28,7 +28,6 @@ class displayer():
 		self.font = pygame.font.SysFont("SWMono", self.text_size, True)
 		self.size = self.font.size(text)
 		self.surf_size = (self.size[0] * side_size, self.size[1] * top_size)
-		print(self.size, self.surf_size)
 
 		if image_p != None:
 			self.surf = pygame.Surface((self.surf_size[0] + 40, self.surf_size[1]))
@@ -50,8 +49,3 @@ class displayer():
 
 	def draw(self, window):
 		window.blit(self.surf, (self.pos))
-
-
-
-# example
-# displayer1 = displayer(22, [300, 100], "1109", 1.6, 1.4, 'sprites/resources/gold.png')

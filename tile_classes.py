@@ -13,6 +13,12 @@ paths = {
 	"ship": 'sprites/buildings/ship',
 }
 
+build_costs = {
+	"woodcutting": [0, 0, 20, 10],
+	"mining": [0, 0, 10, 20],
+	"house": [0, 0, 30, 30]
+}
+
 build_buttons = [
 	button(20, (120, 640), "build"),
 	button(20, (230, 640), "woodcutting", 1.1, 1.1, paths["woodcutting"] + '.png'),
