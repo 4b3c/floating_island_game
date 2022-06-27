@@ -28,9 +28,9 @@ build_costs = {
 
 build_buttons = [
 	button(20, (120, 640), "build"),
-	button(20, (230, 540), "woodcutting", 1.1, 1.1, paths["woodcutting"] + '.png'),
-	button(20, (270, 540), "mining", 1.1, 1.1, paths["mining"] + '.png'),
-	button(20, (310, 540), "house", 1.1, 1.1, paths["house"] + '.png')
+	button(20, (230, 640), "woodcutting", 1.1, 1.1, paths["woodcutting"] + '.png'),
+	button(20, (270, 640), "mining", 1.1, 1.1, paths["mining"] + '.png'),
+	button(20, (310, 640), "house", 1.1, 1.1, paths["house"] + '.png')
 	]
 
 def create_class(name, pos, level = 0):

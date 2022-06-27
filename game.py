@@ -64,6 +64,8 @@ class game_():
 		if self.show_buildings:
 			for button in self.build_buttons[1:]:
 				button.draw(window, mouse_pos, mouse_press)
+
+			for button in self.build_buttons[1:]:
 				if button.highlighted:
 					if button.pressed:
 						self.building_type = button.text
@@ -84,6 +86,7 @@ class game_():
 			if self.building_image != None:
 				closest = variables.round_spec(mouse_pos[0]), variables.round_spec(mouse_pos[1])
 				window.blit(self.building_image, (closest))
+				self.cost_display.draw(window, mouse_pos)
 
 				if mouse_press:
 					self.reset_top_coords()
@@ -102,5 +105,6 @@ class game_():
 							if self.check_cost():
 								self.main_island.top[coords.index(closest)][-1] = tile_classes.create_class(self.building_type, closest, level)
 								self.main_island.top[coords.index(closest)].append(tile_classes.roof([int(closest[0]), int(closest[1] - 1)]))
+								self.cost_display = displayer.cost_displayer(20, self.building_type, self.resources)
 
 		pygame.display.update()

@@ -98,16 +98,17 @@ def pause_menu(window, game_, win_size):
 
 			if button.pressed:
 				if button == buttons_[0]:
-					return
+					return game_
 				elif button == buttons_[1]:
 					game_.save()
 					save_(game_)
 					game_.load()
-					return
+					return game_
 				elif button == buttons_[2]:
 					wait_mouse_up()
 					opening_menu(window)
 					game = main_menu(window, win_size)
 					game.load()
+					return game
 
 		pygame.display.update()

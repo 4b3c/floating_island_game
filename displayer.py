@@ -69,7 +69,7 @@ class cost_displayer():
 		costs = tile_classes.build_costs[building]
 		self.font = pygame.font.SysFont("SWMono", text_size, True)
 
-		size = [0, 0]
+		self.size = [0, 0]
 		indiv_surfs = []
 		for line, resource, count in zip(costs, resources, range(len(costs))):
 			if int(line) > 0:
@@ -78,16 +78,16 @@ class cost_displayer():
 				else:
 					color = variables.word_color
 				indiv_surfs.append(displayer(text_size, (0, 0), line, 1.6, 1.4, tile_classes.resource_paths[resource], False, True, color, "left"))
-				size[1] += text_size * 1.75
-				if self.font.size(str(line))[0] * 3 > size[0]:
-					size[0] = self.font.size(str(line))[0] * 3
+				self.size[1] += text_size * 1.75
+				if self.font.size(str(line))[0] * 3 > self.size[0]:
+					self.size[0] = self.font.size(str(line))[0] * 3
 
-		self.real_surf = pygame.Surface(size)
+		self.real_surf = pygame.Surface(self.size)
 		self.real_surf.fill(variables.displayer_bg)
 		for cost, count in zip(indiv_surfs, range(len(indiv_surfs))):
 			self.real_surf.blit(cost.surf, (0, count * (text_size * 1.6)))
 
-		pygame.draw.rect(self.real_surf, (variables.border), (0, 0, size[0], size[1]), int(text_size / 6))
+		pygame.draw.rect(self.real_surf, (variables.border), (0, 0, self.size[0], self.size[1]), int(text_size / 6))
 
 	def draw(self, window, pos):
-		window.blit(self.real_surf, (pos))
+		window.blit(self.real_surf, (pos[0] + 20, pos[1] - self.size[1] + 20))

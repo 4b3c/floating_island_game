@@ -25,6 +25,6 @@ while True:
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_ESCAPE:
 				if game.show_buildings == False:
-					menus.pause_menu(window, game, win_size)
+					game = menus.pause_menu(window, game, win_size)
 				else:
 					game.show_buildings = False
