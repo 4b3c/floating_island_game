@@ -5,10 +5,11 @@ from buttons import button
 import menus
 import tile_classes
 import displayer
+from person import person
 
 class game_():
 	__slots__ = ("t_size", "height", "main_island", "name", "build_buttons", "show_buildings", "building_image", "top_coords",
-		"building_type", "resources", "res_displayers", "cost_shown", "cost_display")
+		"building_type", "resources", "res_displayers", "cost_shown", "cost_display", "population")
 
 	def __init__(self, win_size, name):
 		self.t_size = 32
@@ -19,11 +20,14 @@ class game_():
 		self.building_image = None
 		self.resources = {"gold": 40, "food": 60, "wood": 70, "stone": 90}
 		self.cost_shown = None
+		self.population = [person((170, 432)), person((240, 432)), person((190, 432)), person((220, 432))]
 
 	def load(self):
 		self.main_island.to_classes()
 		self.build_buttons = tile_classes.build_buttons
 		self.res_displayers = displayer.dict_to_displayers(self.resources)
+		for person_ in self.population:
+			person_.load()
 
 	def save(self):
 		self.main_island.to_save()
@@ -32,6 +36,8 @@ class game_():
 		self.building_image = None
 		self.res_displayers = None
 		self.cost_display = None
+		for person_ in self.population:
+			person_.save()
 
 	def reset_top_coords(self):
 		self.top_coords = [[tower[-1].coords, tower[-1].name] for tower in self.main_island.top]
@@ -40,12 +46,10 @@ class game_():
 		for resource, cost in zip(self.resources, tile_classes.build_costs[self.building_type]):
 			if cost > self.resources[resource]:
 				return False
-
 		for resource, cost in zip(self.resources, tile_classes.build_costs[self.building_type]):
 			self.resources[resource] -= cost
 
 		self.res_displayers = displayer.dict_to_displayers(self.resources)
-
 		return True
 
 	def run(self, window, mouse_pos, mouse_press):
@@ -54,6 +58,9 @@ class game_():
 
 		for display in self.res_displayers:
 			display.draw(window)
+
+		for person in self.population:
+			person.draw(window)
 
 		mouse_pos, mouse_press = pygame.mouse.get_pos(), pygame.mouse.get_pressed()[0]
 		self.build_buttons[0].draw(window, mouse_pos, mouse_press)
