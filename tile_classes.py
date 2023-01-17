@@ -3,7 +3,7 @@ import pygame
 from buttons import button
 
 paths = {
-	"grass": 'sprites/grass/',
+	"grass": 'sprites/grass/grass_',
 	"woodcutting": 'sprites/buildings/woodcutting',
 	"mining": 'sprites/buildings/mining',
 	"house": 'sprites/buildings/house',
@@ -33,6 +33,12 @@ build_buttons = [
 	button(20, (310, 640), "house", 1.1, 1.1, paths["house"] + '.png')
 	]
 
+tags = {
+	"job": [],
+	"house": [],
+	"natural": []
+}
+
 def create_class(name, pos, level = 0):
 	if name == "trees":
 		return trees(pos)
@@ -56,25 +62,46 @@ def create_class(name, pos, level = 0):
 class grass():
 	def __init__(self, coords, level = 0):
 		self.coords = coords
-		self.level = level
+		self.level = random.choice(["1.png", "2.png", "3.png"])
 		self.name = "grass"
-		self.image = pygame.image.load(paths[self.name] + random.choice(('grass_1.png', 'grass_2.png', 'grass_3.png'))).convert_alpha()
+		self.image = None
+		self.tag = "natural"
+
+	def load(self):
+		self.image = pygame.image.load(paths[self.name] + self.level).convert_alpha()
+
+	def save(self):
+		self.image = None
 
 class trees():
 	def __init__(self, coords, level = 0):
 		self.coords = coords
 		self.level = level
 		self.name = "trees"
-		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+		self.image = None
 		self.wood = 500
+		self.tag = "natural"
+
+	def load(self):
+		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+
+	def save(self):
+		self.image = None
 
 class rocks():
 	def __init__(self, coords, level = 0):
 		self.coords = coords
 		self.level = level
 		self.name = "rocks"
-		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+		self.image = None
 		self.rock = 500
+		self.tag = "natural"
+
+	def load(self):
+		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+
+	def save(self):
+		self.image = None
 		
 
 class ruins():
@@ -82,8 +109,17 @@ class ruins():
 		self.coords = coords
 		self.level = level
 		self.name = "ruins"
-		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+		self.image = None
 		self.destroyed = 500
+		self.tag = "job"
+		self.workers = 0
+		self.max_workers = 4
+
+	def load(self):
+		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+
+	def save(self):
+		self.image = None
 		
 
 class ship():
@@ -91,8 +127,16 @@ class ship():
 		self.coords = coords
 		self.level = level
 		self.name = "ship"
-		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+		self.image = None
+		self.tenants = 0
 		self.room = 4
+		self.tag = "house"
+
+	def load(self):
+		self.image = pygame.image.load(paths[self.name] + '.png').convert_alpha()
+
+	def save(self):
+		self.image = None
 		
 
 class mining():
@@ -100,12 +144,21 @@ class mining():
 		self.coords = coords
 		self.level = level
 		self.name = "mining"
-		if level == 0:
+		self.image = None
+		self.jobs = 4
+		self.tag = "job"
+		self.workers = 0
+		self.max_workers = 4
+
+	def load(self):
+		if self.level == 0:
 			insert = ''
-		elif level == 1:
+		elif self.level == 1:
 			insert = '_top'
 		self.image = pygame.image.load(paths[self.name] + insert + '.png').convert_alpha()
-		self.jobs = 4
+
+	def save(self):
+		self.image = None
 		
 
 class woodcutting():
@@ -113,12 +166,21 @@ class woodcutting():
 		self.coords = coords
 		self.level = level
 		self.name = "woodcutting"
-		if level == 0:
-			insert = ''
-		elif level == 1:
-			insert = '_top'
-		self.image = pygame.image.load(paths[self.name] + insert +  '.png').convert_alpha()
+		self.image = None
 		self.jobs = 4
+		self.tag = "job"
+		self.workers = 0
+		self.max_workers = 4
+
+	def load(self):
+		if self.level == 0:
+			insert = ''
+		elif self.level == 1:
+			insert = '_top'
+		self.image = pygame.image.load(paths[self.name] + insert + '.png').convert_alpha()
+
+	def save(self):
+		self.image = None
 		
 
 class house():
@@ -126,12 +188,20 @@ class house():
 		self.coords = coords
 		self.level = level
 		self.name = "house"
-		if level == 0:
+		self.image = None
+		self.tenants = 0
+		self.room = 4
+		self.tag = "house"
+
+	def load(self):
+		if self.level == 0:
 			insert = ''
-		elif level == 1:
+		elif self.level == 1:
 			insert = '_top'
 		self.image = pygame.image.load(paths[self.name] + insert + '.png').convert_alpha()
-		self.room = 4
+
+	def save(self):
+		self.image = None
 
 
 class roof():
@@ -141,3 +211,10 @@ class roof():
 		self.name = "roof"
 		self.image = None
 		self.room = 4
+		self.tag = "natural"
+
+	def load(self):
+		pass
+
+	def save(self):
+		pass

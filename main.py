@@ -6,15 +6,22 @@ window = pygame.display.set_mode(win_size)
 import game
 import menus
 
-
+update_vil = 0
 menus.opening_menu(window)
 game = menus.main_menu(window, win_size)
 game.load()
+
+print(game.main_island.top[9][0].name)
 
 while True:
 	mouse_pos = pygame.mouse.get_pos()
 	mouse_press = pygame.mouse.get_pressed()[0]
 	game.run(window, mouse_pos, mouse_press)
+
+	update_vil += 1
+	if update_vil > 19:
+		game.population[0].go_to(game.main_island.top[9][0])
+		update_vil = 0
 
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:

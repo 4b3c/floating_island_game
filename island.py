@@ -23,33 +23,22 @@ class island():
 				pass
 
 		backup = self.surf[1:]
-		self.top_c = [[x, y - 1] for x, y in self.surf[1:]]
 		self.top = []
 		for i in range(random.randint(5, 8)):
 			tile = random.choice(backup)
-			self.top.append([["trees", tile, 0]])
+			self.top.append([tile_classes.create_class("trees", tile, 0)])
 			backup.remove(tile)
 		for i in range(random.randint(2, 3)):
 			tile = random.choice(backup)
-			self.top.append([["rocks", tile, 0]])
+			self.top.append([tile_classes.create_class("rocks", tile, 0)])
 			backup.remove(tile)
 		for i in range(random.randint(1, 2)):
 			tile = random.choice(backup)
-			self.top.append([["ruins", tile, 0]])
+			self.top.append([tile_classes.create_class("ruins", tile, 0)])
 			backup.remove(tile)
 		for tile in backup:
-			self.top.append([["grass", tile, 0]])
-		self.top.append([["ship", [self.surf[0][0], self.surf[0][1]], 0]])
-
-	def to_classes(self):
-		for tower, count1 in zip(self.top, range(len(self.top))):
-			for tile, count2 in zip(tower, range(len(tower))):
-				self.top[count1][count2] = tile_classes.create_class(tile[0], tile[1], tile[2])
-
-	def to_save(self):
-		for tower, count1 in zip(self.top, range(len(self.top))):
-			for tile, count2 in zip(tower, range(len(tower))):
-				self.top[count1][count2] = [tile.name, tile.coords, tile.level]
+			self.top.append([tile_classes.create_class("grass", tile, 0)])
+		self.top.append([tile_classes.create_class("ship", [self.surf[0][0], self.surf[0][1]], 0)])
 
 	def draw_island(self, t_size, window):
 		for su in self.surf:

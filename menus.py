@@ -15,6 +15,7 @@ def wait_mouse_up():
 
 def save_(game_obj):
 	file = open('worlds/' + game_obj.name + '.pickle', 'wb')
+	print(game_obj.built["job"], game_obj.built["job"][0].image)
 	pickle.dump(game_obj, file)
 	file.close()
 
@@ -73,7 +74,7 @@ def main_menu(window, win_size):
 					game_obj = game.game_(win_size, name)
 					return game_obj
 				else:
-					game_obj = open_(button.text[0:6])
+					game_obj = open_(button.text)
 					return game_obj
 
 		pygame.display.update()

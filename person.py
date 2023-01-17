@@ -4,11 +4,20 @@ import variables
 import pygame
 
 class person():
-	def __init__(self, pos, family = None, traits = None, age = None):
-		self.pos = pos
+	def __init__(self, pos, tags, family = None, traits = None, age = None):
+		self.pos = list(pos)
 		self.name = random_name(random.randint(3, 7))
-		self.job = None
-		self.home = None
+
+		for job in tags["job"]:
+			if job.workers < job.max_workers:
+				job.workers += 1
+				self.job = job
+
+		for house in tags["house"]:
+			if house.tenants < house.room:
+				house.tenants += 1
+				self.house = house
+
 		self.hunger = 100
 		self.health = 100
 		self.happiness = 100
@@ -21,6 +30,8 @@ class person():
 		if family == None:
 			self.family = random_name(random.randint(3, 7))
 
+
+
 	def load(self):
 		self.surf = pygame.Surface((8, 16))
 		self.surf.fill(self.color)
@@ -31,4 +42,18 @@ class person():
 
 	def draw(self, window):
 		window.blit(self.surf, (self.pos))
+
+	def go_to(self, building):
+		pos = self.pos[0]
+		if building == "job":
+			b_pos = (self.job.coords[0] * 32) + 12
+		elif building == "house":
+			b_pos = (self.house.coords[0] * 32) + 12
+		else:
+			b_pos = (building.coords[0] * 32) + 12
+			
+		if pos > b_pos:
+			self.pos[0] -= 1
+		elif pos < b_pos:
+			self.pos[0] += 1
 

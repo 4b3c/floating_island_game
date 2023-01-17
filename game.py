@@ -9,7 +9,7 @@ from person import person
 
 class game_():
 	__slots__ = ("t_size", "height", "main_island", "name", "build_buttons", "show_buildings", "building_image", "top_coords",
-		"building_type", "resources", "res_displayers", "cost_shown", "cost_display", "population")
+		"building_type", "resources", "res_displayers", "cost_shown", "cost_display", "population", "built")
 
 	def __init__(self, win_size, name):
 		self.t_size = 32
@@ -20,17 +20,28 @@ class game_():
 		self.building_image = None
 		self.resources = {"gold": 40, "food": 60, "wood": 70, "stone": 90}
 		self.cost_shown = None
-		self.population = [person((170, 432)), person((240, 432)), person((190, 432)), person((220, 432))]
+		self.built = tile_classes.tags
+		for tile in self.main_island.top:
+			self.built[tile[0].tag].append(tile[0])
+		self.population = [person((170, 432), self.built), person((240, 432), self.built), person((190, 432), self.built), person((220, 432), self.built)]
+		for person_ in self.population:
+			person_.load()
+		
 
 	def load(self):
-		self.main_island.to_classes()
+		for tower in self.main_island.top:
+			for tile in tower:
+				tile.load()
 		self.build_buttons = tile_classes.build_buttons
 		self.res_displayers = displayer.dict_to_displayers(self.resources)
+
 		for person_ in self.population:
 			person_.load()
 
 	def save(self):
-		self.main_island.to_save()
+		for tower in self.main_island.top:
+			for tile in tower:
+				tile.save()
 		self.show_buildings = False
 		self.build_buttons = None
 		self.building_image = None
@@ -111,6 +122,7 @@ class game_():
 
 							if self.check_cost():
 								self.main_island.top[coords.index(closest)][-1] = tile_classes.create_class(self.building_type, closest, level)
+								self.main_island.top[coords.index(closest)][-1].load()
 								self.main_island.top[coords.index(closest)].append(tile_classes.roof([int(closest[0]), int(closest[1] - 1)]))
 								self.cost_display = displayer.cost_displayer(20, self.building_type, self.resources)
 
